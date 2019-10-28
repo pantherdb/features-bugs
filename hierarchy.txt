@@ -1,0 +1,42 @@
+Note, cross aspect relationships are not considered. This is a directed graph and cycles are possible.
+Since a term can have multiple parents, maintain a HashSet of handled terms when constructing list of ancestors.
+
+UPL14.1 classification hierarchy queries:
+
+The following query is used to retrieve the classification relationship terms for PANTHER
+
+select distinct c1.accession, c1.name, c1.definition, c2.accession parent, r.rank
+from  classification c1,   classification_relationship r,  classification c2
+where c1.depth is null  and c1.classification_version_sid =  82 and c1.obsolescence_date is null
+and c1.classification_id = r.child_classification_id
+and r.parent_classification_id = c2.classification_id
+and r.obsolescence_date is null  and c2.classification_version_sid = 82
+and c2.obsolescence_date is null
+and c1.term_type_sid = c2.term_type_sid 
+
+
+The following query is used to retrieve the classification relationship terms for FULL GO:
+
+select distinct c1.accession, c1.name, c1.definition, c2.accession parent, r.rank
+from go_classification c1, go_classification_relationship r, go_classification c2
+where c1.depth is null  and c1.classification_version_sid =  303 and c1.obsolescence_date is null
+and c1.classification_id = r.child_classification_id
+and r.parent_classification_id = c2.classification_id
+and r.obsolescence_date is null and c2.classification_version_sid = 303
+and c2.obsolescence_date is null
+and c1.term_type_sid = c2.term_type_sid 
+
+
+The following query is used to retrieve the classification relationship terms for REACTOME:
+
+select distinct c1.accession, c1.name, c1.definition, c2.accession parent, r.rank
+from reactome_classification c1, reactome_classification_relationship r, reactome_classification c2
+where c1.depth is null  and c1.classification_version_sid =  203 and c1.obsolescence_date is null
+and c1.classification_id = r.child_classification_id
+and r.parent_classification_id = c2.classification_id
+and r.obsolescence_date is null and c2.classification_version_sid = 203
+and c2.obsolescence_date is null
+and c1.term_type_sid = c2.term_type_sid
+
+
+ 
